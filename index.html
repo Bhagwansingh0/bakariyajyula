@@ -276,3 +276,248 @@ index.html
 village-photo-1.jpg
 village-photo-2.jpg
 <a href="#gallery">📸 Gallery</a>
+<!-- ================= ADMIN EDIT LOGIN ================= -->
+
+<section id="admin-login" class="section">
+
+  <h2>🔐 Admin Login</h2>
+
+  <div class="card">
+
+    <label>Login ID</label>
+
+    <input
+      type="text"
+      id="adminUser"
+      placeholder="Login ID"
+      style="width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;"
+    >
+
+    <label>Password</label>
+
+    <input
+      type="password"
+      id="adminPass"
+      placeholder="Password"
+      style="width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;"
+    >
+
+    <button
+      onclick="adminLogin()"
+      class="btn"
+      style="border:0;"
+    >
+      🔓 Login
+    </button>
+
+    <p id="loginMessage"></p>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ADMIN EDIT PANEL ================= -->
+
+<section
+  id="adminPanel"
+  class="section"
+  style="display:none;"
+>
+
+  <h2>⚙️ Admin Edit Panel</h2>
+
+  <div class="card">
+
+    <h3>✏️ Website Information Edit</h3>
+
+    <label>गाँव का नाम</label>
+
+    <input
+      id="editVillage"
+      type="text"
+      value="बकरियाज्यूला"
+      style="width:100%;padding:12px;margin:8px 0;"
+    >
+
+    <label>Mobile Number</label>
+
+    <input
+      id="editMobile"
+      type="text"
+      value="8279412394"
+      style="width:100%;padding:12px;margin:8px 0;"
+    >
+
+    <label>Email</label>
+
+    <input
+      id="editEmail"
+      type="email"
+      value="bspahadi314@gmail.com"
+      style="width:100%;padding:12px;margin:8px 0;"
+    >
+
+    <button
+      onclick="saveAdminData()"
+      class="btn"
+      style="border:0;"
+    >
+      💾 Save
+    </button>
+
+    <button
+      onclick="adminLogout()"
+      class="btn"
+      style="background:#b3261e;border:0;"
+    >
+      🚪 Logout
+    </button>
+
+    <p id="saveMessage"></p>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* ================= LOGIN DETAILS ================= */
+
+/*
+   Demo Login ID:
+   admin
+
+   Demo Password:
+   12345
+
+   इन्हें नीचे बदल सकते हैं।
+*/
+
+const ADMIN_ID = "admin";
+const ADMIN_PASSWORD = "12345";
+
+
+/* ================= LOGIN ================= */
+
+function adminLogin(){
+
+  const user =
+    document.getElementById("adminUser").value;
+
+  const pass =
+    document.getElementById("adminPass").value;
+
+  const message =
+    document.getElementById("loginMessage");
+
+
+  if(
+    user === ADMIN_ID &&
+    pass === ADMIN_PASSWORD
+  ){
+
+    document.getElementById("adminPanel")
+      .style.display = "block";
+
+    message.innerHTML =
+      "✅ Login सफल हुआ!";
+
+    message.style.color = "green";
+
+    localStorage.setItem(
+      "adminLoggedIn",
+      "yes"
+    );
+
+  }else{
+
+    message.innerHTML =
+      "❌ Login ID या Password गलत है।";
+
+    message.style.color = "red";
+
+  }
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function adminLogout(){
+
+  localStorage.removeItem(
+    "adminLoggedIn"
+  );
+
+  document.getElementById("adminPanel")
+    .style.display = "none";
+
+  document.getElementById("loginMessage")
+    .innerHTML =
+    "🚪 Logout हो गया।";
+
+}
+
+
+/* ================= SAVE ================= */
+
+function saveAdminData(){
+
+  const village =
+    document.getElementById("editVillage").value;
+
+  const mobile =
+    document.getElementById("editMobile").value;
+
+  const email =
+    document.getElementById("editEmail").value;
+
+
+  localStorage.setItem(
+    "villageName",
+    village
+  );
+
+  localStorage.setItem(
+    "adminMobile",
+    mobile
+  );
+
+  localStorage.setItem(
+    "adminEmail",
+    email
+  );
+
+
+  document.getElementById("saveMessage")
+    .innerHTML =
+    "✅ जानकारी Save हो गई।";
+
+  document.getElementById("saveMessage")
+    .style.color = "green";
+
+}
+
+
+/* ================= AUTO LOGIN ================= */
+
+window.onload = function(){
+
+  if(
+    localStorage.getItem(
+      "adminLoggedIn"
+    ) === "yes"
+  ){
+
+    document.getElementById("adminPanel")
+      .style.display = "block";
+
+  }
+
+};
+
+</script>
+
+<!-- ================= END ADMIN LOGIN ================= -->
