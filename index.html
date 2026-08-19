@@ -158,3 +158,121 @@ function filterBusinesses(){
 </script>
 </body>
 </html>
+<!-- PHOTO GALLERY START -->
+
+<section id="gallery" class="section">
+
+  <h2>📸 बकरियाज्यूला फोटो गैलरी</h2>
+
+  <p>
+    बकरियाज्यूला के सुंदर पहाड़ी नज़ारे और प्राकृतिक सुंदरता।
+  </p>
+
+  <div class="cards">
+
+    <!-- पहली फोटो -->
+    <div class="card">
+
+      <img
+        src="village-photo-1.jpg"
+        alt="बकरियाज्यूला का पहाड़ी दृश्य"
+        style="
+          width:100%;
+          height:300px;
+          object-fit:cover;
+          border-radius:12px;
+          cursor:pointer;
+        "
+        onclick="openPhoto(this.src)"
+      >
+
+      <h3>🌄 पहाड़ी दृश्य</h3>
+
+      <p>बकरियाज्यूला, चम्पावत, उत्तराखंड</p>
+
+    </div>
+
+
+    <!-- दूसरी फोटो -->
+    <div class="card">
+
+      <img
+        src="village-photo-2.jpg"
+        alt="बकरियाज्यूला का प्राकृतिक दृश्य"
+        style="
+          width:100%;
+          height:300px;
+          object-fit:cover;
+          border-radius:12px;
+          cursor:pointer;
+        "
+        onclick="openPhoto(this.src)"
+      >
+
+      <h3>🏔️ प्राकृतिक नज़ारा</h3>
+
+      <p>बकरियाज्यूला, चम्पावत, उत्तराखंड</p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PHOTO GALLERY END -->
+
+
+<!-- PHOTO FULL SCREEN -->
+
+<div
+  id="photoPopup"
+  style="
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+  "
+  onclick="closePhoto()"
+>
+
+  <img
+    id="largePhoto"
+    src=""
+    style="
+      max-width:95%;
+      max-height:90%;
+      border-radius:12px;
+    "
+  >
+
+</div>
+
+
+<script>
+
+function openPhoto(photo){
+
+  document.getElementById("largePhoto").src = photo;
+
+  document.getElementById("photoPopup").style.display = "flex";
+
+}
+
+function closePhoto(){
+
+  document.getElementById("photoPopup").style.display = "none";
+
+}
+
+</script>
+index.html
+village-photo-1.jpg
+village-photo-2.jpg
+<a href="#gallery">📸 Gallery</a>
