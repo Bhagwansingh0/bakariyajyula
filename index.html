@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>हमारा गाँव | Business & Village</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f6f8fb;color:#222}
+header{background:linear-gradient(135deg,#0b6b3a,#159447);color:#fff;padding:42px 20px;text-align:center}
+header h1{margin:0 0 8px;font-size:34px}header p{margin:0;font-size:17px}
+nav{background:#073b24;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
+nav a{color:#fff;text-decoration:none;padding:10px 14px;border-radius:7px}nav a:hover{background:#159447}
+.container{max-width:1100px;margin:auto;padding:25px 16px}
+.hero{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 18px #00000012;margin-bottom:24px}
+.hero h2{color:#0b6b3a;margin-top:0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#fff;padding:22px;border-radius:14px;box-shadow:0 3px 14px #00000010}.card h3{margin-top:0;color:#0b6b3a}
+.btn{display:inline-block;background:#0b6b3a;color:#fff;padding:11px 16px;border-radius:8px;text-decoration:none;border:0;cursor:pointer}
+.search{width:100%;padding:13px;border:1px solid #ddd;border-radius:9px;margin:10px 0 18px;font-size:16px}
+.business{border-left:5px solid #0b6b3a}.tag{display:inline-block;background:#e8f5ee;color:#0b6b3a;padding:5px 9px;border-radius:20px;font-size:13px}
+footer{background:#073b24;color:#fff;text-align:center;padding:25px;margin-top:30px}
+@media(max-width:600px){header h1{font-size:27px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏡 हमारा गाँव</h1>
+  <p>गाँव की जानकारी • स्थानीय Business • सेवाएँ • समाचार</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a><a href="#village">गाँव</a><a href="#business">Business</a>
+  <a href="#services">सेवाएँ</a><a href="#news">समाचार</a><a href="#contact">संपर्क</a>
+</nav>
+
+<main class="container">
+<section id="home" class="hero">
+  <h2>गाँव में आपका स्वागत है 🙏</h2>
+  <p>यह वेबसाइट गाँव की जानकारी, स्थानीय दुकानों/व्यवसायों और जरूरी सेवाओं को एक जगह उपलब्ध कराने के लिए बनाई गई है।</p>
+  <a class="btn" href="#business">Business देखें</a>
+</section>
+
+<section id="village" class="hero">
+  <h2>🏘️ हमारे गाँव के बारे में</h2>
+  <p>यहाँ गाँव का इतिहास, जनसंख्या, प्रमुख स्थान, विद्यालय, मंदिर, नदियाँ, सड़क और अन्य महत्वपूर्ण जानकारी लिखें।</p>
+</section>
+
+<section id="business" class="hero">
+  <h2>🏪 स्थानीय Business</h2>
+  <input id="search" class="search" placeholder="Business का नाम या category खोजें..." onkeyup="filterBusinesses()">
+  <div id="businessList" class="cards">
+    <div class="card business"><span class="tag">किराना</span><h3>उदाहरण किराना स्टोर</h3><p>📍 मुख्य बाजार</p><p>📞 0000000000</p><a class="btn" href="tel:0000000000">Call</a></div>
+    <div class="card business"><span class="tag">मोबाइल</span><h3>उदाहरण मोबाइल शॉप</h3><p>📍 बाजार</p><p>📞 0000000000</p><a class="btn" href="tel:0000000000">Call</a></div>
+    <div class="card business"><span class="tag">सेवा</span><h3>उदाहरण सेवा केंद्र</h3><p>📍 गाँव</p><p>📞 0000000000</p><a class="btn" href="tel:0000000000">Call</a></div>
+  </div>
+</section>
+
+<section id="services" class="hero">
+  <h2>🛠️ जरूरी सेवाएँ</h2>
+  <div class="cards">
+    <div class="card"><h3>🏥 स्वास्थ्य</h3><p>नजदीकी अस्पताल/क्लिनिक की जानकारी यहाँ जोड़ें।</p></div>
+    <div class="card"><h3>🎓 शिक्षा</h3><p>विद्यालय, कॉलेज और कोचिंग की जानकारी यहाँ जोड़ें।</p></div>
+    <div class="card"><h3>🏛️ सरकारी सेवाएँ</h3><p>पंचायत, प्रमाणपत्र और सरकारी योजनाओं की जानकारी यहाँ जोड़ें।</p></div>
+  </div>
+</section>
+
+<section id="news" class="hero">
+  <h2>📢 गाँव की खबरें / Notice</h2>
+  <div class="card"><h3>नई सूचना</h3><p>यहाँ गाँव की नवीनतम सूचना डालें।</p></div>
+</section>
+
+<section id="contact" class="hero">
+  <h2>📞 संपर्क</h2>
+  <p>Website Admin: अपना नाम यहाँ लिखें</p>
+  <p>मोबाइल: 0000000000</p>
+  <a class="btn" href="https://wa.me/910000000000" target="_blank">WhatsApp</a>
+</section>
+</main>
+
+<footer>© 2026 हमारा गाँव | Business & Village Portal</footer>
+
+<script>
+function filterBusinesses(){
+ const q=document.getElementById("search").value.toLowerCase();
+ document.querySelectorAll("#businessList .business").forEach(c=>{
+   c.style.display=c.innerText.toLowerCase().includes(q)?"block":"none";
+ });
+}
+</script>
+</body>
+</html>
