@@ -521,3 +521,879 @@ window.onload = function(){
 </script>
 
 <!-- ================= END ADMIN LOGIN ================= -->
+<!-- ================= ADMIN PANEL ================= -->
+
+<section id="admin" class="section">
+
+  <h2>🔐 Admin Panel</h2>
+
+  <!-- LOGIN -->
+  <div id="adminLoginBox" class="card">
+
+    <h3>Admin Login</h3>
+
+    <input
+      id="adminId"
+      type="text"
+      placeholder="Login ID"
+      style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px;"
+    >
+
+    <input
+      id="adminPassword"
+      type="password"
+      placeholder="Password"
+      style="width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:8px;"
+    >
+
+    <button class="btn" onclick="adminLogin()">
+      🔓 Login
+    </button>
+
+    <p id="adminLoginMsg"></p>
+
+  </div>
+
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="adminDashboard" style="display:none;">
+
+    <div class="card">
+
+      <h3>⚙️ Website Management</h3>
+
+      <button class="btn" onclick="showAdmin('business')">
+        🏪 Business
+      </button>
+
+      <button class="btn" onclick="showAdmin('news')">
+        📰 News
+      </button>
+
+      <button class="btn" onclick="showAdmin('gallery')">
+        📸 Gallery
+      </button>
+
+      <button class="btn" onclick="showAdmin('notice')">
+        📢 Notice
+      </button>
+
+      <button
+        class="btn"
+        style="background:#b3261e"
+        onclick="adminLogout()"
+      >
+        🚪 Logout
+      </button>
+
+    </div>
+
+
+    <!-- BUSINESS ADMIN -->
+
+    <div id="adminBusiness" class="card adminBox">
+
+      <h3>🏪 Business Management</h3>
+
+      <input
+        id="businessName"
+        placeholder="Business का नाम"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <input
+        id="businessOwner"
+        placeholder="मालिक का नाम"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <input
+        id="businessCategory"
+        placeholder="Category"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <input
+        id="businessMobile"
+        placeholder="Mobile Number"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <input
+        id="businessAddress"
+        placeholder="पूरा पता"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <textarea
+        id="businessInfo"
+        placeholder="Business की जानकारी"
+        style="width:100%;padding:11px;margin:5px 0;"
+      ></textarea>
+
+      <button class="btn" onclick="addBusiness()">
+        ➕ Add Business
+      </button>
+
+      <div id="businessAdminList"></div>
+
+    </div>
+
+
+    <!-- NEWS ADMIN -->
+
+    <div id="adminNews" class="card adminBox" style="display:none;">
+
+      <h3>📰 News Management</h3>
+
+      <input
+        id="newsTitle"
+        placeholder="News Title"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <textarea
+        id="newsText"
+        placeholder="News की जानकारी"
+        style="width:100%;padding:11px;margin:5px 0;"
+      ></textarea>
+
+      <button class="btn" onclick="addNews()">
+        ➕ Add News
+      </button>
+
+      <div id="newsAdminList"></div>
+
+    </div>
+
+
+    <!-- GALLERY ADMIN -->
+
+    <div id="adminGallery" class="card adminBox" style="display:none;">
+
+      <h3>📸 Gallery Management</h3>
+
+      <input
+        id="galleryTitle"
+        placeholder="Photo का नाम"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <input
+        id="galleryURL"
+        placeholder="Photo URL"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <button class="btn" onclick="addGallery()">
+        ➕ Add Photo
+      </button>
+
+      <div id="galleryAdminList"></div>
+
+    </div>
+
+
+    <!-- NOTICE ADMIN -->
+
+    <div id="adminNotice" class="card adminBox" style="display:none;">
+
+      <h3>📢 Notice Management</h3>
+
+      <input
+        id="noticeTitle"
+        placeholder="Notice Title"
+        style="width:100%;padding:11px;margin:5px 0;"
+      >
+
+      <textarea
+        id="noticeText"
+        placeholder="Notice की जानकारी"
+        style="width:100%;padding:11px;margin:5px 0;"
+      ></textarea>
+
+      <button class="btn" onclick="addNotice()">
+        ➕ Add Notice
+      </button>
+
+      <div id="noticeAdminList"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =================================================
+   ADMIN LOGIN
+================================================= */
+
+const ADMIN_ID = "admin";
+const ADMIN_PASSWORD = "12345";
+
+
+function adminLogin(){
+
+  const id =
+    document.getElementById("adminId").value;
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+  if(
+    id === ADMIN_ID &&
+    password === ADMIN_PASSWORD
+  ){
+
+    localStorage.setItem(
+      "bakariyajyulaAdmin",
+      "yes"
+    );
+
+    document.getElementById(
+      "adminLoginBox"
+    ).style.display = "none";
+
+    document.getElementById(
+      "adminDashboard"
+    ).style.display = "block";
+
+    loadAdminData();
+
+  }else{
+
+    document.getElementById(
+      "adminLoginMsg"
+    ).innerHTML =
+      "❌ Login ID या Password गलत है।";
+
+  }
+
+}
+
+
+function adminLogout(){
+
+  localStorage.removeItem(
+    "bakariyajyulaAdmin"
+  );
+
+  location.reload();
+
+}
+
+
+/* =================================================
+   ADMIN MENU
+================================================= */
+
+function showAdmin(type){
+
+  document.querySelectorAll(
+    ".adminBox"
+  ).forEach(function(box){
+
+    box.style.display = "none";
+
+  });
+
+
+  if(type === "business"){
+
+    document.getElementById(
+      "adminBusiness"
+    ).style.display = "block";
+
+  }
+
+  if(type === "news"){
+
+    document.getElementById(
+      "adminNews"
+    ).style.display = "block";
+
+  }
+
+  if(type === "gallery"){
+
+    document.getElementById(
+      "adminGallery"
+    ).style.display = "block";
+
+  }
+
+  if(type === "notice"){
+
+    document.getElementById(
+      "adminNotice"
+    ).style.display = "block";
+
+  }
+
+}
+
+
+/* =================================================
+   BUSINESS
+================================================= */
+
+function getBusinesses(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "bakariyajyulaBusinesses"
+    ) || "[]"
+  );
+
+}
+
+
+function saveBusinesses(data){
+
+  localStorage.setItem(
+    "bakariyajyulaBusinesses",
+    JSON.stringify(data)
+  );
+
+}
+
+
+function addBusiness(){
+
+  const data =
+    getBusinesses();
+
+  data.push({
+
+    name:
+      document.getElementById(
+        "businessName"
+      ).value,
+
+    owner:
+      document.getElementById(
+        "businessOwner"
+      ).value,
+
+    category:
+      document.getElementById(
+        "businessCategory"
+      ).value,
+
+    mobile:
+      document.getElementById(
+        "businessMobile"
+      ).value,
+
+    address:
+      document.getElementById(
+        "businessAddress"
+      ).value,
+
+    info:
+      document.getElementById(
+        "businessInfo"
+      ).value
+
+  });
+
+  saveBusinesses(data);
+
+  clearBusinessForm();
+
+  renderBusinesses();
+
+}
+
+
+function deleteBusiness(index){
+
+  const data =
+    getBusinesses();
+
+  if(confirm("Business delete करें?")){
+
+    data.splice(index,1);
+
+    saveBusinesses(data);
+
+    renderBusinesses();
+
+  }
+
+}
+
+
+function renderBusinesses(){
+
+  const data =
+    getBusinesses();
+
+  const box =
+    document.getElementById(
+      "businessAdminList"
+    );
+
+  box.innerHTML =
+    "<hr><h4>Business List</h4>";
+
+  data.forEach(function(item,index){
+
+    box.innerHTML += `
+
+      <div class="card">
+
+        <b>${item.name}</b>
+
+        <p>
+          ${item.category}
+        </p>
+
+        <p>
+          📞 ${item.mobile}
+        </p>
+
+        <p>
+          📍 ${item.address}
+        </p>
+
+        <button
+          class="btn"
+          style="background:#b3261e"
+          onclick="deleteBusiness(${index})"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+function clearBusinessForm(){
+
+  document.getElementById(
+    "businessName"
+  ).value="";
+
+  document.getElementById(
+    "businessOwner"
+  ).value="";
+
+  document.getElementById(
+    "businessCategory"
+  ).value="";
+
+  document.getElementById(
+    "businessMobile"
+  ).value="";
+
+  document.getElementById(
+    "businessAddress"
+  ).value="";
+
+  document.getElementById(
+    "businessInfo"
+  ).value="";
+
+}
+
+
+/* =================================================
+   NEWS
+================================================= */
+
+function getNews(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "bakariyajyulaNews"
+    ) || "[]"
+  );
+
+}
+
+
+function addNews(){
+
+  const data =
+    getNews();
+
+  data.push({
+
+    title:
+      document.getElementById(
+        "newsTitle"
+      ).value,
+
+    text:
+      document.getElementById(
+        "newsText"
+      ).value
+
+  });
+
+  localStorage.setItem(
+    "bakariyajyulaNews",
+    JSON.stringify(data)
+  );
+
+  document.getElementById(
+    "newsTitle"
+  ).value="";
+
+  document.getElementById(
+    "newsText"
+  ).value="";
+
+  renderNewsAdmin();
+
+}
+
+
+function deleteNews(index){
+
+  const data =
+    getNews();
+
+  if(confirm("News delete करें?")){
+
+    data.splice(index,1);
+
+    localStorage.setItem(
+      "bakariyajyulaNews",
+      JSON.stringify(data)
+    );
+
+    renderNewsAdmin();
+
+  }
+
+}
+
+
+function renderNewsAdmin(){
+
+  const data =
+    getNews();
+
+  const box =
+    document.getElementById(
+      "newsAdminList"
+    );
+
+  box.innerHTML =
+    "<hr><h4>News List</h4>";
+
+  data.forEach(function(item,index){
+
+    box.innerHTML += `
+
+      <div class="card">
+
+        <h4>${item.title}</h4>
+
+        <p>${item.text}</p>
+
+        <button
+          class="btn"
+          style="background:#b3261e"
+          onclick="deleteNews(${index})"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =================================================
+   GALLERY
+================================================= */
+
+function getGallery(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "bakariyajyulaGallery"
+    ) || "[]"
+  );
+
+}
+
+
+function addGallery(){
+
+  const data =
+    getGallery();
+
+  data.push({
+
+    title:
+      document.getElementById(
+        "galleryTitle"
+      ).value,
+
+    url:
+      document.getElementById(
+        "galleryURL"
+      ).value
+
+  });
+
+  localStorage.setItem(
+    "bakariyajyulaGallery",
+    JSON.stringify(data)
+  );
+
+  document.getElementById(
+    "galleryTitle"
+  ).value="";
+
+  document.getElementById(
+    "galleryURL"
+  ).value="";
+
+  renderGalleryAdmin();
+
+}
+
+
+function deleteGallery(index){
+
+  const data =
+    getGallery();
+
+  if(confirm("Photo delete करें?")){
+
+    data.splice(index,1);
+
+    localStorage.setItem(
+      "bakariyajyulaGallery",
+      JSON.stringify(data)
+    );
+
+    renderGalleryAdmin();
+
+  }
+
+}
+
+
+function renderGalleryAdmin(){
+
+  const data =
+    getGallery();
+
+  const box =
+    document.getElementById(
+      "galleryAdminList"
+    );
+
+  box.innerHTML =
+    "<hr><h4>Gallery List</h4>";
+
+  data.forEach(function(item,index){
+
+    box.innerHTML += `
+
+      <div class="card">
+
+        <img
+          src="${item.url}"
+          style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;"
+        >
+
+        <p>
+          ${item.title}
+        </p>
+
+        <button
+          class="btn"
+          style="background:#b3261e"
+          onclick="deleteGallery(${index})"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =================================================
+   NOTICE
+================================================= */
+
+function getNotices(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "bakariyajyulaNotices"
+    ) || "[]"
+  );
+
+}
+
+
+function addNotice(){
+
+  const data =
+    getNotices();
+
+  data.push({
+
+    title:
+      document.getElementById(
+        "noticeTitle"
+      ).value,
+
+    text:
+      document.getElementById(
+        "noticeText"
+      ).value
+
+  });
+
+  localStorage.setItem(
+    "bakariyajyulaNotices",
+    JSON.stringify(data)
+  );
+
+  document.getElementById(
+    "noticeTitle"
+  ).value="";
+
+  document.getElementById(
+    "noticeText"
+  ).value="";
+
+  renderNoticeAdmin();
+
+}
+
+
+function deleteNotice(index){
+
+  const data =
+    getNotices();
+
+  if(confirm("Notice delete करें?")){
+
+    data.splice(index,1);
+
+    localStorage.setItem(
+      "bakariyajyulaNotices",
+      JSON.stringify(data)
+    );
+
+    renderNoticeAdmin();
+
+  }
+
+}
+
+
+function renderNoticeAdmin(){
+
+  const data =
+    getNotices();
+
+  const box =
+    document.getElementById(
+      "noticeAdminList"
+    );
+
+  box.innerHTML =
+    "<hr><h4>Notice List</h4>";
+
+  data.forEach(function(item,index){
+
+    box.innerHTML += `
+
+      <div class="card">
+
+        <h4>${item.title}</h4>
+
+        <p>${item.text}</p>
+
+        <button
+          class="btn"
+          style="background:#b3261e"
+          onclick="deleteNotice(${index})"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =================================================
+   LOAD ADMIN DATA
+================================================= */
+
+function loadAdminData(){
+
+  renderBusinesses();
+
+  renderNewsAdmin();
+
+  renderGalleryAdmin();
+
+  renderNoticeAdmin();
+
+}
+
+
+/* =================================================
+   AUTO LOGIN
+================================================= */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    if(
+      localStorage.getItem(
+        "bakariyajyulaAdmin"
+      ) === "yes"
+    ){
+
+      document.getElementById(
+        "adminLoginBox"
+      ).style.display="none";
+
+      document.getElementById(
+        "adminDashboard"
+      ).style.display="block";
+
+      loadAdminData();
+
+    }
+
+  }
+);
+
+</script>
